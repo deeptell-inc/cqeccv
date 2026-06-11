@@ -1,0 +1,70 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cvqbench"
+version = "0.1.0"
+description = "Comparative resource and noise-robustness benchmark of quantum algorithms ported to photonic continuous-variable hardware"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+authors = [
+    { name = "Hikaru Wakaura", email = "h.wakaura@deeptell.jp" },
+    { name = "Taiki Tanimae", email = "t.tanimae@deeptell.jp" },
+]
+keywords = [
+    "quantum computing", "continuous variable", "photonic",
+    "GKP code", "quantum error correction", "quantum phase estimation",
+    "qDRIFT", "Regev factoring", "QKAN",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = [
+    "numpy>=1.21",
+    "scipy>=1.7",
+    "sympy>=1.9",
+]
+
+[project.optional-dependencies]
+ml = [
+    "torch>=2.0",
+    "scikit-learn>=1.0",
+]
+viz = [
+    "matplotlib>=3.5",
+]
+dev = [
+    "pytest>=7.0",
+    "torch>=2.0",
+    "scikit-learn>=1.0",
+    "matplotlib>=3.5",
+]
+
+[project.urls]
+Homepage = "https://github.com/hwakaura/cvqbench"
+Repository = "https://github.com/hwakaura/cvqbench"
+
+[project.scripts]
+cvqbench = "cvqbench.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cvqbench"]
+
+[tool.hatch.build.targets.sdist]
+only-include = [
+    "src/cvqbench",
+    "tests",
+    "README.md",
+    "LICENSE",
+    "CITATION.cff",
+    "pyproject.toml",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

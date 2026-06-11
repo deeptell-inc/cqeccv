@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "cvqbench: resource and noise-robustness benchmark of quantum algorithms on photonic continuous-variable hardware"
+version: 0.1.0
+authors:
+  - family-names: Wakaura
+    given-names: Hikaru
+    affiliation: "QIRI (Quantum Integrated Research Institute Inc.)"
+    orcid: "https://orcid.org/0000-0001-8381-8323"
+  - family-names: Tanimae
+    given-names: Taiki
+    affiliation: "QIRI (Quantum Integrated Research Institute Inc.)"
+license: MIT
+repository-code: "https://github.com/hwakaura/cvqbench"
+keywords:
+  - quantum computing
+  - continuous variable
+  - GKP code
+  - quantum phase estimation

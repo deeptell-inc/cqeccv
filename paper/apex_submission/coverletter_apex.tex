@@ -1,0 +1,77 @@
+\documentclass[11pt]{letter}
+\usepackage[margin=1in]{geometry}
+\usepackage{parskip}
+
+\signature{Hikaru Wakaura \\ Taiki Tanimae \\ QIRI (Quantum Integrated
+Research Institute Inc.)}
+\address{QIRI (Quantum Integrated Research Institute Inc.)\\
+1--16--3 Akasaka, Minato-ku\\ Tokyo 107--0061, Japan\\
+h.wakaura@deeptell.jp,\ t.tanimae@deeptell.jp}
+
+\begin{document}
+\begin{letter}{Editorial Board \\ Applied Physics Express \\
+The Japan Society of Applied Physics / IOP Publishing}
+
+\opening{Dear Editors,}
+
+We submit the accompanying manuscript, ``Algorithm suitability for
+photonic continuous-variable quantum computers: a comparative resource
+and noise-robustness study,'' for consideration as a Letter in
+\emph{Applied Physics Express}. The work falls within APEX's scope of
+applied photonics and quantum technologies, and it addresses a question
+of direct practical relevance to the design of GKP-based photonic
+processors that several groups are now constructing experimentally.
+
+\textbf{Motivation.} Photonic continuous-variable (CV) architectures
+support deterministic, room-temperature generation of large cluster
+states and are a leading route to fault-tolerant quantum computing.
+Their cost, however, is dominated by squeezing and by the consumption of
+non-Gaussian resource states. Different quantum algorithms place very
+different demands on these resources, and no unified comparison has
+quantified which algorithm classes are intrinsically robust on CV
+hardware and how much GKP error correction actually helps. The present
+work supplies that comparison and the design rules that follow from it.
+
+\textbf{Main findings.} We port four representative algorithms---%
+control-free phase estimation, randomized product formulas, quantum
+Kolmogorov--Arnold networks, and Regev factoring---to a common CV model
+and compare them under photon loss (exact Fock-space Kraus channel) and
+Gaussian displacement with GKP correction. Three results are central:
+(i)~control-free phase estimation is the most noise-robust because it
+needs no controlled unitaries and, for quadratic Hamiltonians, no
+non-Gaussian gates, and the property survives for non-Gaussian
+Hamiltonians; (ii)~GKP correction reduces residual error only above the
+finite-squeezing floor, and whether an algorithm benefits is set by a
+noise- versus systematic-limited dichotomy whose empirical envelope
+constants we report with $R^{2}\!\ge\!0.89$; (iii)~against a qubit
+surface-code baseline, the CV advantage is structural---Gaussian
+operations are free---rather than threshold-based.
+
+\textbf{Quantitative novelty.} The core GKP-correction model is not
+assumed: it is validated against an explicit Glancy--Knill
+error-correction Monte Carlo to within $0.1\%$, lifting a common
+methodological concern in CV-resource papers. A two-dimensional phase
+diagram and Hamiltonian ensembles confirm the predictions are not
+artefacts of single operating points or single instances. We are
+explicit, in a dedicated paragraph, about which results are exact, which
+are validated model surrogates, and which are extrapolations.
+
+\textbf{Experimental relevance.} The natural test bed is a GKP-encoded
+photonic cluster-state processor at $10$--$15$~dB squeezing---within
+reach of current laboratories---where the predicted floor crossing and
+the algorithm dichotomy are directly observable; control-free
+spectroscopy of a small bosonic Hamiltonian is the most accessible first
+demonstration. We believe this makes the manuscript a timely and useful
+contribution to APEX's photonics readership.
+
+\textbf{Compliance.} The Letter is below the APEX length and figure
+limits, the abstract is within 100 words, and the manuscript carefully
+avoids the discouraged language patterns. All scripts and numerical
+results that reproduce every figure and table are bundled with the
+submission. The manuscript has not been published and is not under
+consideration elsewhere; the authors declare no competing interests.
+
+\closing{Sincerely,}
+
+\end{letter}
+\end{document}

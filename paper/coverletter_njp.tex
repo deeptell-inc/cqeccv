@@ -1,0 +1,91 @@
+\documentclass[11pt]{letter}
+\usepackage[margin=1in]{geometry}
+\usepackage{parskip}
+
+\signature{Hikaru Wakaura \\ Taiki Tanimae \\ QIRI (Quantum Integrated
+Research Institute Inc.)}
+\address{QIRI (Quantum Integrated Research Institute Inc.)\\
+1--16--3 Akasaka, Minato-ku\\ Tokyo 107--0061, Japan\\
+h.wakaura@deeptell.jp,\ t.tanimae@deeptell.jp}
+
+\begin{document}
+\begin{letter}{Editorial Office \\ New Journal of Physics \\ IOP
+Publishing}
+
+\opening{Dear Editors,}
+
+We submit the accompanying manuscript, ``Which quantum algorithms suit
+photonic continuous-variable hardware? A comparative resource and
+noise-robustness study with a worked spectroscopic demonstration on
+H$_2$, HF, and I$_2$,'' for consideration as a Paper in \emph{New
+Journal of Physics}. The work falls within the journal's broad scope of
+quantum information science, photonic quantum technologies, and
+computational molecular physics.
+
+\textbf{Motivation.} Photonic continuous-variable (CV) architectures
+support deterministic, room-temperature generation of large cluster
+states and are a leading route to fault-tolerant quantum computing,
+where overhead is dominated by squeezing and by the consumption of
+non-Gaussian resource states. Different algorithms place very different
+demands on these resources, yet no unified comparison has quantified
+which algorithm classes are intrinsically robust on CV hardware and how
+much Gottesman--Kitaev--Preskill (GKP) error correction actually helps.
+
+\textbf{Main results.} We port four representative algorithms---%
+control-free phase estimation, randomized product formulas, quantum
+Kolmogorov--Arnold networks, and Regev factoring---to a common CV model
+and compare them under photon loss (exact Fock-space Kraus channel) and
+Gaussian displacement with GKP correction. We establish: (i)~control-%
+free phase estimation is the most noise-robust because it needs no
+controlled unitaries and, for quadratic Hamiltonians, no non-Gaussian
+gates, a property that survives for non-Gaussian Hamiltonians;
+(ii)~GKP correction reduces residual error only above the finite-%
+squeezing floor (proved), with the gain set by a noise- versus
+systematic-limited dichotomy whose empirical envelope constants we
+report with $R^{2}\!\ge\!0.89$; (iii)~the comb readout of Regev requires
+squeezing scaling as $\sqrt{n}$ (proved); (iv)~against a qubit
+surface-code baseline, the CV advantage is structural---Gaussian
+operations are free---rather than threshold-based.
+
+\textbf{Worked physics example.} The manuscript includes a quantitative
+demonstration on three diatomic molecules (H$_2$, HF, I$_2$) spanning a
+decade in vibrational quantum ($\omega_e=214$--$4401$~cm$^{-1}$) and an
+order of magnitude in anharmonicity. Using experimentally fixed
+Huber--Herzberg Morse parameters (no free parameters), CV control-free
+QPE recovers the populated vibrational eigenenergies of all three
+molecules to within $0.55$~cm$^{-1}$---below the standard
+$1$~cm$^{-1}$ spectroscopic threshold; weakly anharmonic I$_2$ reaches
+$\sim\!10^{-2}$~cm$^{-1}$. Reaching the same accuracy with a
+discrete-variable QPE requires $\sim 1.5\times10^{10}$ T-gates and
+$\sim$~16{,}000 controlled time evolutions, while the CV control-free
+protocol needs zero controlled unitaries and zero non-Gaussian gates
+for the harmonic part. A Chebyshev-KAN classifier trained on the
+recovered eigenstates achieves $100\%$ accuracy in assigning
+vibrational quantum numbers under realistic measurement noise.
+
+\textbf{Methodological rigour.} The core GKP-correction surrogate is
+validated against an explicit Glancy--Knill error-correction Monte
+Carlo to within $0.1\%$, lifting a common methodological concern in
+CV-resource analyses. A two-dimensional noise phase diagram and
+Hamiltonian ensembles confirm the predictions are not artefacts of
+single operating points or single instances. We are explicit about
+which results are exact, which are validated model surrogates, and
+which are extrapolations.
+
+\textbf{Fit to NJP.} New Journal of Physics has a long tradition of
+publishing methodological and computational advances at the
+intersection of quantum information and physical applications. We
+believe the manuscript fits this profile: it provides a unified
+methodology for assessing CV algorithm suitability, together with a
+quantitative physics application that yields concrete predictions
+experimentalists can test on near-term GKP-encoded photonic processors.
+All scripts and numerical results that reproduce every figure and
+table accompany the submission.
+
+The manuscript has not been published and is not under consideration
+at any other journal; the authors declare no competing interests.
+
+\closing{Sincerely,}
+
+\end{letter}
+\end{document}
