@@ -85,12 +85,13 @@ def apply_loss(rho, Ks):
 # GKP 訂正: 物理(σ_d, η) → 訂正後実効(σ_corr, η_corr)  [dB 依存]
 # ═══════════════════════════════════════════════════════════════════
 
-def gkp_correct(sigma_d, eta, sq_db):
+def gkp_correct(sigma_d, eta, sq_db, window=None):
+    """window: 論理誤り判定窓 (既定 √π/2; Glancy–Knill 耐故障窓は √π/6)."""
     gkp = GKPStabilizerCV(sq_db)
     delta = db_to_delta(sq_db)
     sigma_loss2 = 0.5 * (1.0 - eta)                  # 損失の等価変位分散
     sigma_phys = sqrt(sigma_d ** 2 + sigma_loss2)
-    p_L, _ = gkp.logical_error_rate(sigma_phys, n_ec_rounds=1)
+    p_L, _ = gkp.logical_error_rate(sigma_phys, n_ec_rounds=1, window=window)
     var = (1.0 - p_L) * delta ** 2 + p_L * sigma_phys ** 2
     sigma_corr = sqrt(var)
     # GKP EC は損失+変位を残留格子雑音 σ_corr に均質化。
@@ -104,14 +105,16 @@ def gkp_correct(sigma_d, eta, sq_db):
 # 1. 制御なし QPE: 損失チャネル(Fock) + 変位読出雑音
 # ═══════════════════════════════════════════════════════════════════
 
-def qpe_error(sigma_d, eta, seed):
+def qpe_error(sigma_d, eta, seed, n_t=3072):
+    """n_t: 時間サンプル数。変位雑音は n_t 点で平均化されるので、QPE の
+    「頑健性」は n_t に強く依存する (residual_audit.qpe_nt_sensitivity)."""
     cut = 14
     bm = BosonicMode(cutoff=cut)
     H = bm.quadratic_hamiltonian(1.0, 0.30)
     phi = bm.coherent(1.1)
     qpe = ControlFreeQPE_CV(H, phi, p_ref=0.6)
     target = np.sort(qpe.phi_levels[:4])
-    T, n_t = 150.0, 3072
+    T = 150.0
     tg = np.linspace(0, T, n_t)
     psi = qpe.psi
     rho_psi = np.outer(psi, psi.conj())

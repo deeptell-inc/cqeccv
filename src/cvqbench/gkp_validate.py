@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
 """
-gkp_validate.py — 中核 GKP 訂正モデルの検証（Nature 査読対応・データ補完）
+gkp_validate.py — GKP 訂正モデルの整合性チェック
 
-本文 Methods の解析的 p_L (単一ラウンド GKP shift-error モデル) と、
-surrogate 残留 σ_corr²=(1-p_L)Δ²+p_L σ_phys² が、実 GKP EC プロトコル
-(有限スクイズ補助での modular quadrature 測定 → 丸め訂正) を陽に
-モンテカルロした結果と一致するかを検証する。
+解析的 p_round (単一ラウンド GKP shift-error モデル) を、同じシフト模型を
+手続きとして書いた Monte Carlo と照合する。チェック [1] (p_round) だけが
+解析式に対する独立な数値検証である。
+
+⚠ チェック [2],[3] は構成上の恒等式であり検証ではない:
+  r = e − wrap(e+ξ, √π) = −ξ + √π k  ⇒  wrap(r, √π) ≡ −ξ  ⇒  σ_res ≡ Δ。
+  σ_phys を 0.3 → 50 に変えても σ_res は 15 桁一致する。[3] は
+  その σ_res=Δ を surrogate 式に代入し直しているだけなので、surrogate が
+  「二チャネル真値」と一致するのは定義による。これらは実装の自己整合性
+  を示すだけで、surrogate を物理的に検証したことにはならない。
 
 プロトコル (Glancy-Knill 型, 1 quadrature):
   入力シフト e ~ N(0, σ_phys)         (物理変位誤り)
@@ -106,8 +112,8 @@ def main():
     R['max_rel_diff_meaningful'] = max_rel
     R['max_abs_diff'] = max_abs
 
-    # --- 2. 連続残留床 σ_res ≈ Δ の確認 ---
-    print("\n[2] 訂正後の連続残留床 σ_res (≈ Δ になるはず)")
+    # --- 2. 連続残留床 σ_res = Δ (恒等式: wrap(r) ≡ -ξ) ---
+    print("\n[2] 訂正後の連続残留床 σ_res (構成上 σ_res ≡ Δ; 恒等式の確認)")
     floor = []
     for db in [9.0, 12.0, 15.0]:
         delta = db_to_delta(db)
@@ -119,10 +125,9 @@ def main():
               f"σ_res/Δ={sres/delta:.2f}")
     R['residual_floor'] = floor
 
-    # --- 3. surrogate σ_corr の検証: 二チャネル(p_L,Δ)モデルと一致 ---
-    print("\n[3] surrogate σ_corr² = (1-p_L)Δ² + p_L σ_phys² の妥当性")
-    print("    (実 EC は残留≈Δ + 論理誤り率 p_L の二チャネル; surrogate は")
-    print("     これをスカラー化。両者のアルゴリズム誤差代理を比較)")
+    # --- 3. surrogate σ_corr: σ_res=Δ を代入した自己整合性 (恒等式) ---
+    print("\n[3] surrogate σ_corr² = (1-p_L)Δ² + p_L σ_phys² の自己整合性")
+    print("    (σ_res ≡ Δ を代入するので一致は定義による; 独立検証ではない)")
     comp = []
     for sigma in [0.10, 0.20, 0.30]:
         for db in [9.0, 12.0, 15.0]:
@@ -154,11 +159,10 @@ def main():
     print("\n" + "=" * 72)
     print(" 結論")
     print("=" * 72)
-    print(f" • 解析的 p_L は実 GKP EC を相対差≤{max_rel:.1%}(p>1e-3), "
-          f"絶対差≤{max_abs:.0e}(全域) で再現")
-    print(f" • 訂正後の連続残留は床 σ_res≈Δ (比 ~1) を確認")
-    print(f" • surrogate σ_corr は二チャネル真値と最大 {max_sur:.1%} 差で一致")
-    print(" ⇒ 中核 GKP 訂正モデルは実プロトコルで検証された (surrogate 妥当)")
+    print(f" • 解析的 p_round は同一シフト模型の MC を相対差≤{max_rel:.1%}"
+          f"(p>1e-3), 絶対差≤{max_abs:.1e}(全域) で再現 (唯一の独立チェック)")
+    print(f" • σ_res/Δ = 1 と surrogate 一致 (≤{max_sur:.2%}) は構成上の恒等式")
+    print(" ⇒ surrogate は自己整合的だが、物理的 GKP EC 回路に対しては未検証")
     return R
 
 

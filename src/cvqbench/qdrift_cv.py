@@ -50,9 +50,15 @@ class Bosonic:
             'cubic': x @ x @ x,
         }
 
-    def random_hamiltonian(self, rng, n_gauss=4, n_nongauss=2,
-                           scale=0.3):
-        """H = Σ h_l (ガウス + 非ガウス) をランダム係数で構築."""
+    def random_hamiltonian(self, rng, n_gauss=4, n_nongauss=2, scale=0.3):
+        """H = Σ h_l (ガウス + 非ガウス) をランダム係数で構築.
+
+        ⚠ 非ガウス項 x³, n² は非有界演算子なので、cutoff を変えて構築し直すと
+        ‖h_l‖ が増大し λ=Σ‖h_l‖ も変わる (λ: 16.3 @ c=10 → 91.1 @ c=26)。
+        λ を揃えても qDRIFT 誤差は cutoff 10→26 で約 10 分の 1 に単調減少
+        する (residual_audit.qdrift_cutoff_study) ので、本ベンチマークは
+        Fock cutoff に関して収束していない。絶対値は cutoff の性質として読む。
+        """
         terms = []
         gk = list(self.terms_gauss)
         for _ in range(n_gauss):

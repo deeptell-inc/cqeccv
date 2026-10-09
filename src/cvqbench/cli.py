@@ -27,11 +27,16 @@ TARGETS = {
     "phase":        "noise_phase_diagram",
     "h2-morse":     "physics_h2_morse",
     "h2-qkan":      "physics_h2_qkan",
+    "audit":        "panel_audit",
+    "h2-noise":     "physics_h2_noise",
+    "qkan-photon":  "qkan_photon",
+    "residual":     "residual_audit",
 }
 
 ALL_ORDER = ["qec", "qpe", "qdrift", "qkan", "regev", "noise",
              "normalized", "gkp-validate", "dv-baseline", "phase",
-             "qpe-nongauss", "qkan-deep", "h2-morse", "h2-qkan"]
+             "qpe-nongauss", "qkan-deep", "h2-morse", "h2-qkan",
+             "audit", "h2-noise", "qkan-photon", "residual"]
 
 
 def _run(target: str) -> int:

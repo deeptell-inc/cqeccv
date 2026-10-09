@@ -73,17 +73,20 @@ class GKPStabilizerCV:
         # 1 論理 qubit あたり平均光子数 n̄ ≈ 1/(2Δ²) (GKP 漸近)
         self.nbar = 1.0 / (2.0 * self.delta ** 2)
 
-    def logical_error_rate(self, sigma_disp, n_ec_rounds=1):
+    def logical_error_rate(self, sigma_disp, n_ec_rounds=1, window=None):
         """ランダム変位 σ_disp に対する論理誤り率.
 
         GKP 訂正: 各 quadrature を最近接 √π 格子へ丸める。
         実効雑音 σ_eff² = σ_disp² + Δ² (有限スクイージング補助の付加雑音)。
-        論理誤り = |shift| > √π/2 の確率。
+        論理誤り = |shift| > window の確率。既定 window=√π/2 は理想格子の
+        Voronoi 境界。Glancy–Knill の耐故障窓 √π/6 を渡すと p_L は大きく
+        変わる (panel_audit.correction_decomposition で感度を報告)。
         n_ec_rounds 回の訂正で残留雑音は √π/2 で再規格化される。
         """
+        w = SQRT_PI / 2.0 if window is None else window
         sigma_eff = np.sqrt(sigma_disp ** 2 + self.delta ** 2)
         # 1 ラウンドあたりの quadrature 当たり論理フリップ確率
-        p_round = 1.0 - erf((SQRT_PI / 2.0) / (np.sqrt(2) * sigma_eff))
+        p_round = 1.0 - erf(w / (np.sqrt(2) * sigma_eff))
         # 2 quadrature (X,Z), n ラウンドの蓄積 (独立近似)
         p_log = 1.0 - (1.0 - p_round) ** (2 * n_ec_rounds)
         return float(np.clip(p_log, 0, 1)), float(sigma_eff)
